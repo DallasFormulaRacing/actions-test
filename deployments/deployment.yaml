@@ -14,7 +14,7 @@ spec:
         app: guestbook-ui
     spec:
       containers:
-      - image: aymanhaq/flask-app:latest
+      - image: aymanhaq/flask-app:v1.0
         name: guestbook-ui
         ports:
         - containerPort: 5000
