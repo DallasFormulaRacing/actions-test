@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app
 spec:
-  replicas: 10
+  replicas: 5
   revisionHistoryLimit: 3
   selector:
     matchLabels:
@@ -14,7 +14,7 @@ spec:
         app: flask-app
     spec:
       containers:
-      - image: aymanhaq/flask-app:v1.0
+      - image: aymanhaq/flask-app:latest
         name: flask-app
         ports:
         - containerPort: 5000
