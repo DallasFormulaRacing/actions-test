@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-ui
+  name: flask-app
 spec:
   replicas: 10
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: guestbook-ui
+      app: flask-app
   template:
     metadata:
       labels:
-        app: guestbook-ui
+        app: flask-app
     spec:
       containers:
       - image: aymanhaq/flask-app:v1.0
-        name: guestbook-ui
+        name: flask-app
         ports:
         - containerPort: 5000
