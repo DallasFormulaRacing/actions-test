@@ -6,6 +6,10 @@ app = Flask(__name__)
 def hello():
     return "Testing CI/CD(october6- attempt 2)"
 
+@app.route("/errorTest")
+def error():
+    raise Exception("Error test")
+
 if __name__ == "__main__":
     print("test 1")
     app.run(host="0.0.0.0", port=5000, debug=True)
