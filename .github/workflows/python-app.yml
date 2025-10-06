@@ -42,4 +42,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app:latest
