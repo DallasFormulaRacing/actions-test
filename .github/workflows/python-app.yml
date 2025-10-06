@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       # Step 1: Checkout repo
@@ -42,4 +44,14 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app:v3.0
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app:${{ github.sha }}
+
+      # Step 7: Update image tag in deployment.yaml
+      - name: Update deployment.yaml
+        run: |
+          sed -i "s|image: aymanhaq/flask-app:.*|image: aymanhaq/flask-app:${GITHUB_SHA}|" deployments/deployment.yaml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add deployments/deployment.yaml
+          git commit -m "Update deployment.yaml"
+          git push
