@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: aymanhaq/flask-app:a5697d1fef5be5a0d31353c1a431b855bdbc0927
+        image: aymanhaq/flask-app:b579104bbc54b50cd728e6eee11d76078e82ef97
         ports:
         - containerPort: 5000
