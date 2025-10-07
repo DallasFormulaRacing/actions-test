@@ -48,6 +48,7 @@ jobs:
 
       # Step 7: Update image tag in deployment.yaml
       - name: Update deployment.yaml
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           sed -i "s|image: aymanhaq/flask-app:.*|image: aymanhaq/flask-app:${GITHUB_SHA}|" deployments/deployment.yaml
           git config user.name 'github-actions[bot]'
