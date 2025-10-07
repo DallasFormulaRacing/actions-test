@@ -2,9 +2,11 @@ import sentry_sdk
 from flask import Flask
 
 sentry_sdk.init(
-    dsn="https://086406d651154e51a261082a9153fe78@sentry-intake.us5.datadoghq.com/1",
+    dsn: "https://b91d300f29870176c8f05b114d8ca558@o4510128361963520.ingest.us.sentry.io/4510145722056704",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
 )
-sentry_sdk.set_tag("service", "flask-app")
 
 app = Flask(__name__)
 
