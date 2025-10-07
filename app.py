@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Testing CI/CD(october6- attempt 2)"
+    return "Testing CI/CD(october6- attempt new"
 
 @app.route("/errorTest")
 def error():
