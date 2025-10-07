@@ -2,10 +2,7 @@ import sentry_sdk
 from flask import Flask
 
 sentry_sdk.init(
-    dsn="https://b91d300f29870176c8f05b114d8ca558@o4510128361963520.ingest.us.sentry.io/4510145722056704",
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
-    send_default_pii=True,
+    dsn="https://086406d651154e51a261082a9153fe78@sentry-intake.us5.datadoghq.com/1",
 )
 sentry_sdk.set_tag("service", "flask-app")
 
