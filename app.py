@@ -8,9 +8,12 @@ sentry_sdk.set_tag("service", "flask-app")
 
 app = Flask(__name__)
 
+@app.route("/error")
+def trigger_error():
+    raise Exception("This is a test exception for Sentry->Datadog!")
+
 @app.route("/")
 def hello_world():
-    1/0  # raises an error
     return "<p>Hello, World!</p>"
 
 if __name__ == "__main__":
