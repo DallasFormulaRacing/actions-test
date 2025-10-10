@@ -12,11 +12,11 @@ app = Flask(__name__)
 
 @app.route("/error")
 def trigger_error():
-    raise Exception("This is a test exception for Sentry->Datadog!")
+    raise Exception("This is a test exception for Sentry. Coming soon: webhooks from Sentry->Datadog")
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World! Making a new change</p>"
+    return "Go to /error to return a error to Sentry"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
