@@ -16,7 +16,7 @@ def trigger_error():
 
 @app.route("/")
 def hello_world():
-    return "Go to /error to return a error to Sentry."
+    return "Go to /error to return a error to Sentry. Hi Team!"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
