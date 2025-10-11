@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/error")
 def trigger_error():
-    raise Exception("This is a test exception for Sentry. Coming soon: webhooks from Sentry->Datadog.")
+    raise Exception("This is a test exception for Sentry.")
 
 @app.route("/")
 def hello_world():
