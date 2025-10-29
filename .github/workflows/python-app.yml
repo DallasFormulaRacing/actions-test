@@ -44,7 +44,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: actions-test/flask-app:${{ github.sha }}
+          tags: actions-test_flask-app:${{ github.sha }}
 
       # Step 7: Update image tag in deployment.yaml
       - name: Update deployment.yaml
