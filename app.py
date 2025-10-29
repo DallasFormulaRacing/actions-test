@@ -17,7 +17,7 @@ def trigger_error():
 
 @app.route("/")
 def hello_world():
-    return "New update. Testing DFR Dockerhub"
+    return "Test Update#2 for DFR dockerhub "
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
