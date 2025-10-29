@@ -17,7 +17,7 @@ def trigger_error():
 
 @app.route("/")
 def hello_world():
-    return "Test Update#4 for DFR dockerhub (previously token had wrong permissions)"
+    return "Test Success! CICD now pushes to dallasformularacing Dockerhub"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
