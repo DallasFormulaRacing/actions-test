@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-app-svc
+  namespace: default
+spec:
+  rules:
+    - host: test.dallasformularacing.com    # CHANGE WHEN DOMAIN CHANGES
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-app-svc    # Kubernetes Service name
+                port:
+                  number: 80   # Grafana’s container port
