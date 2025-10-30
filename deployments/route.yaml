@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: "software.dallasformularacing.com/test_deployment"    # CHANGE WHEN DOMAIN CHANGES
+    - host: "what.dallasformularacing.com/test_deployment"    # CHANGE WHEN DOMAIN CHANGES
       http:
         paths:
           - path: /
