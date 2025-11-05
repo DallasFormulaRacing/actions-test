@@ -18,7 +18,7 @@ import {
 } from "@tabler/icons-react"
 
 import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
+// import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -149,6 +149,28 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [sensors, setSensors] = React.useState<{ sensor_id: string; name: string }[]>([]);
+
+  React.useEffect(() => {
+    async function fetchSensors() {
+      try {
+        const res = await fetch('http://localhost:5000/sensors');
+        const data = await res.json();
+        setSensors(data);
+      } catch (error) {
+        console.error('Error fetching sensors:', error);
+      }
+    }
+
+    fetchSensors();
+  }, []);
+
+  const sensorList = (sensors || []).map((sensor) => ({
+    id: sensor.sensor_id,
+    name: sensor.name,
+    url: `#/sensors/${sensor.sensor_id}`,
+  }));
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -167,8 +189,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        {/* <NavMain items={data.navMain} /> */}
+        <NavDocuments items={sensorList} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
