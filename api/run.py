@@ -1,4 +1,4 @@
-from api import make_app
+from app import make_app
 
 app = make_app()
 
