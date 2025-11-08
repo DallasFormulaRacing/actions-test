@@ -10,13 +10,14 @@ sentry_sdk.init(
 
 app = Flask(__name__)
 
+
 @app.route("/error")
 def trigger_error():
     raise Exception("This is a test exception for Sentry.")
 
 @app.route("/")
 def hello_world():
-    return "Go to /error to return a error to Sentry. Hi Team!"
+    return "Demo 2"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
