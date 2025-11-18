@@ -78,8 +78,17 @@ const data = {
   ],
 }
 
+export type SensorItem = {
+  sensor_id: number;
+  name: string;
+  group: string;
+  car: string;
+  type: string;
+  url: string;
+}
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [sensors, setSensors] = React.useState<{ sensor_id: string; name: string }[]>([]);
+  const [sensors, setSensors] = React.useState<SensorItem[]>([]);
 
   React.useEffect(() => {
     async function fetchSensors() {
@@ -96,8 +105,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, []);
 
   const sensorList = (sensors || []).map((sensor) => ({
-    id: sensor.sensor_id,
-    name: sensor.name,
+    ...sensor,
     url: `/sensors/${sensor.sensor_id}`,
   }));
 

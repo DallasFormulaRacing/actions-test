@@ -233,17 +233,7 @@ export function ChartAreaInteractive({ metrics }: { metrics: Metrics[] }) {
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }}
+              hide
             />
             <ChartTooltip
               cursor={false}
@@ -253,6 +243,9 @@ export function ChartAreaInteractive({ metrics }: { metrics: Metrics[] }) {
                     return new Date(value).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
                     })
                   }}
                   indicator="dot"
