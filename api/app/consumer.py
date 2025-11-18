@@ -17,10 +17,13 @@ def consumer():
 
   print("Consumer starting...")
   for msg in consumer:
-    print(f"Message: {msg.value}")
+    print(f"Message: {msg.value['event']['data'][0]}\n\n")
     messages.append(msg.value)
 
 def start_consumer():
   thread = threading.Thread(target=consumer, daemon=True)
   thread.start()
   return thread
+
+if __name__ == "__main__":
+  consumer()
