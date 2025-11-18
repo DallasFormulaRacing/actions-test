@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header"
 import {
   SidebarInset,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Routes, Route } from "react-router-dom"
 
@@ -14,15 +15,14 @@ export default function Page() {
       <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 100)",
+          "--sidebar-width": "50vw",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }
       >
-        <AppSidebar variant="inset" />
+        <AppSidebar variant="inset" collapsible="icon"/>
         <SidebarInset>
           <SiteHeader />
-
           <Routes>
             <Route path="/sensors/:sensorId" element={<SensorPage />} />
           </Routes>
