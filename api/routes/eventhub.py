@@ -42,4 +42,7 @@ def stream():
             data = message_queue.get()
             yield f"data: {json.dumps(data)}\n\n"
     
-    return Response(generate(), mimetype='text/event-stream')
+    response = Response(generate(), mimetype='text/event-stream')
+    response.headers['Cache-Control'] = 'no-cache'
+    response.headers['X-Accel-Buffering'] = 'no'
+    return response
