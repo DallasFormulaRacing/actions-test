@@ -55,8 +55,6 @@ class EventHubConsumerService:
                 # Fallback: just print if no callback provided
                 print(f"Data: {data}\n")
             
-            # # Update checkpoint to mark message as processed
-            # await partition_context.update_checkpoint(event)
             
         except json.JSONDecodeError as e:
             print(f"ERROR: Failed to parse Event Hub message: {e}")
