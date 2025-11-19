@@ -11,6 +11,9 @@ def create_app():
     from .consumer import start_consumer
     start_consumer()
 
+    from .routes.eventhub import eventhub
+    app.register_blueprint(eventhub)
+
     return app
 
 app = create_app()
