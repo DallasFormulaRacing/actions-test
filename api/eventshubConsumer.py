@@ -27,13 +27,13 @@ class EventHubConsumerService:
         """        
         Expected message format:
         {
-            'event': {
-                'event_type': 'temp',
-                'data': [
+            "event": {
+                "event_type": "temp",
+                "data": [
                     {
-                        'time': '2025-11-18T22:11:11.574241+00:00Z',
-                        'sensor_id': 1,
-                        'data': 80.44
+                        "time": "2025-11-18T22:11:11.574241+00:00Z",
+                        "sensor_id": 1,
+                        "data": 80.44
                     }
                 ]
             }
