@@ -1,4 +1,5 @@
 import asyncio
+import time
 import datetime
 import os
 import random
@@ -13,21 +14,23 @@ EVENT_HUB_CONNECTION_STR = os.getenv("EVENTSHUB_CONNECTION_STRING")
 EVENT_HUB_NAME = os.getenv("EVENTSHUB_NAME")
 
 
-
 async def run():
-
     producer = EventHubProducerClient.from_connection_string(
         conn_str=EVENT_HUB_CONNECTION_STR, eventhub_name=EVENT_HUB_NAME
     )
+    
     async with producer:
-        # Create a batch.
-        event_data_batch = await   producer.create_batch()
-
-        # Add events to the batch.
-        for i in range(2):
+        iteration = 0
+        
+        while True:
+            # Create a new batch for this iteration
+            event_data_batch = await producer.create_batch()
+            
+            # Add 5 events to the batch
+            
             current_time = datetime.datetime.now(datetime.UTC).isoformat() + "Z"
             random_temp = 70 + random.random() * 30
-
+            
             message_data = {
                 "event": {
                     "event_type": "temp",
@@ -40,9 +43,20 @@ async def run():
                     ],
                 }
             }
-
+            
             event_data_batch.add(EventData(json.dumps(message_data)))
-        
-        await producer.send_batch(event_data_batch)
+            
+            # Send the batch
+            await producer.send_batch(event_data_batch)
+            iteration += 1
+            print(f"Sent batch {iteration}")
+            
+            # Wait before sending next batch
+            await asyncio.sleep(5)
 
-asyncio.run(run())
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(run())
+    except KeyboardInterrupt:
+        print("\nStopping sender...")
