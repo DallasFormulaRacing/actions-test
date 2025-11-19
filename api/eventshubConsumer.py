@@ -9,20 +9,9 @@ load_dotenv()
 
 
 class EventHubConsumerService:
-    """
-    Event Hub consumer service that can be integrated with WebSocket/Flask.
-    Accepts a callback function to handle incoming messages.
-    """
+
     
     def __init__(self, on_message_callback=None):
-        """
-        Initialize the Event Hub consumer service.
-        
-        Args:
-            on_message_callback: Async function called when a message is received.
-                                 Should accept a dict parameter with the message data.
-                                 Example: async def on_message(data: dict) -> None
-        """
         self.on_message_callback = on_message_callback
         self.connection_str = os.getenv("EVENTSHUB_CONSUMER_STRING")
         self.event_hub_name = os.getenv("EVENTSHUB_NAME")
@@ -75,10 +64,7 @@ class EventHubConsumerService:
             print(f"ERROR: Error processing Event Hub message: {e}")
     
     async def start(self):
-        """
-        Start consuming messages from Event Hub.
-        This will run indefinitely until stopped or an error occurs.
-        """
+
         print(f"Starting Event Hub consumer...")
         print(f"   Hub: {self.event_hub_name}")
         print(f"   Consumer Group: {self.consumer_group}")
@@ -103,10 +89,8 @@ class EventHubConsumerService:
 
 # Standalone mode for testing
 async def main():
-    """Run the consumer in standalone mode for testing."""
     
     async def print_message(data):
-        """Simple callback that prints messages."""
         event_info = data.get('event', {})
         event_type = event_info.get('event_type', 'unknown')
         event_data = event_info.get('data', [])
