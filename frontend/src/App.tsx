@@ -8,6 +8,7 @@ import {
 import { Routes, Route } from "react-router-dom"
 
 import SensorPage from "@/components/SensorPage"
+import LiveLogStream from "@/components/LiveLogStream"
 
 export default function Page() {
   return (
@@ -15,7 +16,7 @@ export default function Page() {
       <SidebarProvider
       style={
         {
-          "--sidebar-width": "50vw",
+          "--sidebar-width": "25vw",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }
@@ -26,7 +27,7 @@ export default function Page() {
           <Routes>
             <Route path="/sensors/:sensorId" element={<SensorPage />} />
           </Routes>
-
+          <LiveLogStream />
         </SidebarInset>
       </SidebarProvider>
     </div>
