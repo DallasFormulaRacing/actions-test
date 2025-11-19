@@ -27,7 +27,7 @@ async def run():
             
             # Add 5 events to the batch
             
-            current_time = datetime.datetime.now(datetime.UTC).isoformat() + "Z"
+            current_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-6))).isoformat() + "Z"
             random_temp = 70 + random.random() * 30
             
             message_data = {
