@@ -28,12 +28,10 @@ export default function LiveLogStream() {
       try {
         const message = JSON.parse(event.data);
         
-        // Extract event data
         const eventInfo = message.event;
         const eventType = eventInfo.event_type;
         const eventData = eventInfo.data;
 
-        // Create log entries for each data item
         const newLogs = eventData.map((item: { time: string; sensor_id: number; data: number }) => ({
           time: item.time,
           sensor_id: item.sensor_id,
@@ -52,13 +50,11 @@ export default function LiveLogStream() {
       setIsConnected(false);
     };
 
-    // Cleanup on unmount
     return () => {
       eventSource.close();
     };
   }, []);
 
-  // Auto-scroll to bottom when new logs arrive
   useEffect(() => {
     logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [logs]);
