@@ -36,7 +36,7 @@ async def run():
                     "data": [
                         {
                             "time": current_time,
-                            "sensor_id": 1,
+                            "sensor_id": 1107,
                             "data": round(random_temp, 2),
                         }
                     ],
@@ -51,7 +51,7 @@ async def run():
             print(f"Sent batch {iteration}")
             
             # Wait before sending next batch
-            # await asyncio.sleep(1)
+            await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
