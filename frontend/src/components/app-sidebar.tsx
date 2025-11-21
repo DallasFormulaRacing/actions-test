@@ -107,17 +107,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     fetchSensors();
   }, []);
 
-  const filteredSensors = sensors.filter((sensor) => {
-    if (filter === 'all') return true;
-    if (filter === 'active') return sensor.active === true;
-    if (filter === 'inactive') return sensor.active === false;
-    return true;
-  });
-
-  const sensorList = (filteredSensors || []).map((sensor) => ({
-    ...sensor,
-    url: `/sensors/${sensor.sensor_id}`,
-  }));
+  const sensorList = React.useMemo(() => {
+    const filtered = sensors.filter((sensor) => {
+      if (filter === 'all') return true;
+      if (filter === 'active') return sensor.active === true;
+      if (filter === 'inactive') return sensor.active === false;
+      return true;
+    });
+    
+    return filtered.map((sensor) => ({
+      ...sensor,
+      url: `/sensors/${sensor.sensor_id}`,
+    }));
+  }, [sensors, filter]);
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -135,7 +137,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="px-2 py-2">
+        <div className="px-2 py-2 group-data-[collapsible=icon]:hidden">
           <ToggleGroup 
             type="single" 
             value={filter} 
