@@ -72,7 +72,7 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
                 </SidebarMenuButton>
 
                 {/* Dropdown Actions */}
-                <DropdownMenu>
+                {/* <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuAction
                       showOnHover
@@ -104,7 +104,7 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
                       <span>Delete</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </SidebarMenuItem>
             )
           })}

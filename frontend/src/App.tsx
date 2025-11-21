@@ -15,7 +15,7 @@ export default function Page() {
       <SidebarProvider
       style={
         {
-          "--sidebar-width": "clamp(250px, 15vw, 400px)",
+          "--sidebar-width": "clamp(250px, 20vw, 20vw)",
           "--sidebar-width-mobile": "280px",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
