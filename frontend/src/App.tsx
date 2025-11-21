@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/site-header"
 import {
   SidebarInset,
   SidebarProvider,
-  SidebarTrigger,
+  // SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Routes, Route } from "react-router-dom"
 
@@ -15,7 +15,8 @@ export default function Page() {
       <SidebarProvider
       style={
         {
-          "--sidebar-width": "25vw",
+          "--sidebar-width": "clamp(250px, 15vw, 400px)",
+          "--sidebar-width-mobile": "280px",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }
