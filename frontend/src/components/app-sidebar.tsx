@@ -30,6 +30,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const data = {
   user: {
@@ -90,6 +91,7 @@ export type SensorItem = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [sensors, setSensors] = React.useState<SensorItem[]>([]);
+  const [filter, setFilter] = React.useState<'all' | 'active' | 'inactive'>('all');
 
   React.useEffect(() => {
     async function fetchSensors() {
@@ -105,7 +107,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     fetchSensors();
   }, []);
 
-  const sensorList = (sensors || []).map((sensor) => ({
+  const filteredSensors = sensors.filter((sensor) => {
+    if (filter === 'all') return true;
+    if (filter === 'active') return sensor.active === true;
+    if (filter === 'inactive') return sensor.active === false;
+    return true;
+  });
+
+  const sensorList = (filteredSensors || []).map((sensor) => ({
     ...sensor,
     url: `/sensors/${sensor.sensor_id}`,
   }));
@@ -117,7 +126,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className={`data-[slot=sidebar-menu-button]:p-1.5!`}
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
@@ -126,6 +135,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <div className="px-2 py-2">
+          <ToggleGroup 
+            type="single" 
+            value={filter} 
+            onValueChange={(value) => value && setFilter(value as 'all' | 'active' | 'inactive')}
+            className="justify-start"
+          >
+            <ToggleGroupItem value="all" aria-label="Show all sensors" className="flex-1">
+              All
+            </ToggleGroupItem>
+            <ToggleGroupItem value="active" aria-label="Show active sensors" className="flex-1">
+              Active
+            </ToggleGroupItem>
+            <ToggleGroupItem value="inactive" aria-label="Show inactive sensors" className="flex-1">
+              Inactive
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         {/* <NavMain items={data.navMain} /> */}
