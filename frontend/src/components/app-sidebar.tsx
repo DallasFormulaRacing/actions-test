@@ -85,6 +85,7 @@ export type SensorItem = {
   car: string;
   type: string;
   url: string;
+  active: boolean;
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

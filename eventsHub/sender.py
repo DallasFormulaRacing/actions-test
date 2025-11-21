@@ -51,7 +51,7 @@ async def run():
             print(f"Sent batch {iteration}")
             
             # Wait before sending next batch
-            await asyncio.sleep(5)
+            # await asyncio.sleep(1)
 
 
 if __name__ == "__main__":

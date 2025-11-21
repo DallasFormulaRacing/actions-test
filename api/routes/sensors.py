@@ -6,7 +6,8 @@ sensors = Blueprint('sensors', __name__)
 
 @sensors.route("/sensors", methods=["GET"])
 def get_sensors():
-    res = session.query(sensors_table).filter_by(active=False).all() # Change active=True
+    res = session.query(sensors_table).all() # Change active=True
+
     rows = [dict(zip(sensors_table.columns.keys(), row)) for row in res]
     return jsonify(rows)
 
@@ -17,6 +18,5 @@ def get_sensor_metrics(sensor_id):
 
     if not rows:
         return jsonify({"error": "Sensor not found"}), 404
-
     results = [dict(row._mapping) for row in rows]
     return jsonify(results)
