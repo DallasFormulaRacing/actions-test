@@ -31,6 +31,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Input } from "@/components/ui/input"
 
 const data = {
   user: {
@@ -93,6 +94,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [sensors, setSensors] = React.useState<SensorItem[]>([]);
   const [filter, setFilter] = React.useState<'all' | 'active' | 'inactive'>('all');
 
+  const [nameFilter, setNameFilter] = React.useState("");
+  const [groupFilter, setGroupFilter] = React.useState("");
+  const [carFilter, setCarFilter] = React.useState("");
+  const [typeFilter, setTypeFilter] = React.useState("");
+
   React.useEffect(() => {
     async function fetchSensors() {
       try {
@@ -109,9 +115,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const sensorList = React.useMemo(() => {
     const filtered = sensors.filter((sensor) => {
-      if (filter === 'all') return true;
-      if (filter === 'active') return sensor.active === true;
-      if (filter === 'inactive') return sensor.active === false;
+      if (filter === 'active' && !sensor.active) return false;
+      if (filter === 'inactive' && sensor.active) return false;
+
+      if (groupFilter && !(sensor.group ?? "").toLowerCase().includes(groupFilter.toLowerCase())) {
+        return false;
+      }
+      if (carFilter && !sensor.car.toLowerCase().includes(carFilter.toLowerCase())) {
+        return false;
+      }
+      if (typeFilter && !sensor.type.toLowerCase().includes(typeFilter.toLowerCase())) {
+        return false;
+      }
+      if (nameFilter && !sensor.name.toLowerCase().includes(nameFilter.toLowerCase())) {
+        return false;
+      }
+
       return true;
     });
     
@@ -119,7 +138,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ...sensor,
       url: `/sensors/${sensor.sensor_id}`,
     }));
-  }, [sensors, filter]);
+  }, [sensors, filter, groupFilter, carFilter, typeFilter, nameFilter]);
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -154,6 +173,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               Inactive
             </ToggleGroupItem>
           </ToggleGroup>
+        </div>
+        <div className="px-3 space-y-2 group-data-[collapsible=icon]:hidden">
+          <Input
+            placeholder="Search name..."
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+            className="h-8 text-sm"
+          />
+          <Input
+            placeholder="Search group..."
+            value={groupFilter}
+            onChange={(e) => setGroupFilter(e.target.value)}
+            className="h-8 text-sm"
+          />
+          <Input
+            placeholder="Search car..."
+            value={carFilter}
+            onChange={(e) => setCarFilter(e.target.value)}
+            className="h-8 text-sm"
+          />
+          <Input
+            placeholder="Search type..."
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="h-8 text-sm"
+          />
         </div>
       </SidebarHeader>
       <SidebarContent>
