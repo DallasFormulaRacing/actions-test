@@ -56,7 +56,7 @@ export default function LiveLogStream() {
   }, []);
 
   useEffect(() => {
-    logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    logsEndRef.current?.scrollIntoView({ behavior: 'instant' });
   }, [logs]);
 
   return (

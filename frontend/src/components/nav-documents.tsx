@@ -32,7 +32,7 @@ import { Badge } from "@/components/ui/badge"
 export function NavDocuments({ items }: { items: SensorItem[] }) {
   const { isMobile } = useSidebar()
   const location = useLocation()
-
+  console.error(items[0])
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Sensors</SidebarGroupLabel>
@@ -45,12 +45,12 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
                 <SidebarMenuButton
                   asChild
                   isActive={active}
-                  className="flex flex-col items-start gap-2 !h-auto py-2"
+                  className="flex flex-col items-start gap-2 h-auto py-2"
                 >
                   <Link to={item.url}>
                     <div className="flex flex-wrap gap-1 mt-1">
                       <Badge
-                        variant="outline"
+                        variant={item.active ? "active" : "inactive"}
                       >
                         ID: {item.sensor_id}
                       </Badge>
