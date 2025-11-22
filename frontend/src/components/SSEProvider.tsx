@@ -30,7 +30,7 @@ export function SSEProvider({ children }: { children: React.ReactNode }) {
     es.onmessage = (e) => {
       try {
         const msg = JSON.parse(e.data);
-        setLatestEvents((prev) => [msg, ...prev].slice(0, 300));
+        setLatestEvents((prev) => [...prev, msg].slice(-300));
       } catch (err: any) {
         console.error(err.msg);
       }
