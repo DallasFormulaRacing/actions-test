@@ -35,7 +35,7 @@ async def run():
                     "data": [
                         {
                             "time": current_time,
-                            "sensor_id": 2,
+                            "sensor_id": 1,
                             "data": iteration,
                         }
                     ],

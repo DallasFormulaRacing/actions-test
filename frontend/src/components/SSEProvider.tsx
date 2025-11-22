@@ -5,6 +5,8 @@ interface SSEContextType {
   isConnected: boolean;
 }
 
+const environment = "kafka"
+
 export const SSEContext = createContext<SSEContextType>({
   latestEvents: [],
   isConnected: false,
@@ -15,7 +17,7 @@ export function SSEProvider({ children }: { children: React.ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const es = new EventSource("http://localhost:5000/eventhub/stream");
+    const es = new EventSource(`http://localhost:5000/${environment}/stream`);
 
     es.onopen = () => {
       console.log("SSE connected");

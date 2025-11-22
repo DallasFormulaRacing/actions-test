@@ -8,11 +8,11 @@ def create_app():
     from .routes.sensors import sensors
     app.register_blueprint(sensors)
 
-    from .consumer import start_consumer
-    start_consumer()
-
     from .routes.eventhub import eventhub
     app.register_blueprint(eventhub)
+
+    from .routes.kafka import kafka_bp
+    app.register_blueprint(kafka_bp)
 
     return app
 
