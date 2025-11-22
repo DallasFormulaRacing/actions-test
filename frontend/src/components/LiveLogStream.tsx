@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSSE } from '@/hooks/useSSE';
 
@@ -13,37 +13,31 @@ interface LogEntry {
 const MAX_LOGS = 100; // Limit log history to prevent performance degradation
 
 export default function LiveLogStream({sensorID}: {sensorID: number}) {
-  const [logs, setLogs] = useState<LogEntry[]>([]);
-  // const [isConnected, setIsConnected] = useState(false);
-  // const eventSourceRef = useRef<EventSource | null>(null);
   const logsEndRef = useRef<HTMLDivElement>(null);
-  // const shouldAutoScrollRef = useRef(true);
 
   const { isConnected, latestEvents } = useSSE();
 
-  useEffect(() => {
-    if (!latestEvents.length) return;
+  const logs = useMemo(() => {
+    if (!latestEvents.length) return [];
 
-    // Extract logs for this specific sensor
+    // Flatten all events and filter for this specific sensor
     const sensorLogs: LogEntry[] = latestEvents
-      .flatMap((event: any) =>
-        event.event.data
-          .filter((d: any) => d.sensor_id === sensorID)
-          .map((d: any) => ({
+      .flatMap((event: any) => {
+        if (!event || !event.event || !Array.isArray(event.event.data)) return [];
+        
+        return event.event.data
+          .filter((d: { sensor_id: number; time: string; data: number }) => d.sensor_id === sensorID)
+          .map((d: { sensor_id: number; time: string; data: number }) => ({
             id: `${d.time}-${d.sensor_id}-${Math.random()}`,
             time: d.time,
             sensor_id: d.sensor_id,
             event_type: event.event.event_type,
             data: d.data,
-          }))
-      );
-
-    if (sensorLogs.length > 0) {
-      setLogs((prev) => {
-        const updated = [...prev, ...sensorLogs];
-        return updated.length > MAX_LOGS ? updated.slice(-MAX_LOGS) : updated;
+          }));
       });
-    }
+
+    // Keep only the last MAX_LOGS entries
+    return sensorLogs.slice(-MAX_LOGS);
   }, [latestEvents, sensorID]);
 
   // useEffect(() => {
@@ -73,8 +67,17 @@ export default function LiveLogStream({sensorID}: {sensorID: number}) {
                   ) : (
                     logs.map((log, index) => (
                       <div key={log.id} className="mb-4 text-gray-100">
-                        <div>time: {log.time}</div>
-                        <div>sensor_id: {log.sensor_id}</div>
+                        <div>time: {new Date(log.time).toLocaleString('en-US', { 
+                          timeZone: 'America/Chicago',
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                          hour12: true
+                        })}</div>
+                        {/* <div>sensor_id: {log.sensor_id}</div> */}
                         <div>event_type: {log.event_type}</div>
                         <div>data: {log.data}</div>
                         {index < logs.length - 1 && <div className="my-2 border-t border-gray-700"></div>}

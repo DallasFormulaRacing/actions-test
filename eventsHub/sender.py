@@ -25,7 +25,6 @@ async def run():
             # Create a new batch for this iteration
             event_data_batch = await producer.create_batch()
             
-            # Add 5 events to the batch
             
             current_time = datetime.datetime.utcnow().isoformat() + "Z"
             random_temp = 70 + random.random() * 30
@@ -36,8 +35,8 @@ async def run():
                     "data": [
                         {
                             "time": current_time,
-                            "sensor_id": 1,
-                            "data": round(random_temp, 2),
+                            "sensor_id": 2,
+                            "data": iteration,
                         }
                     ],
                 }
@@ -48,10 +47,10 @@ async def run():
             # Send the batch
             await producer.send_batch(event_data_batch)
             iteration += 1
-            print(f"Sent batch {current_time}")
+            print(f"Sent message {iteration}")
             
             # Wait before sending next batch
-            await asyncio.sleep(1)
+            # await asyncio.sleep(3)
 
 
 if __name__ == "__main__":
