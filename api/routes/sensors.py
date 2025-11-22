@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from ..models import sensors as sensors_table, metrics as metrics_table, session
+from ..db.models import sensors as sensors_table, metrics as metrics_table, session
 from datetime import datetime
 
 sensors = Blueprint('sensors', __name__)

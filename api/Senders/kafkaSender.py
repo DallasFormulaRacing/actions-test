@@ -44,7 +44,7 @@ def run():
             
             # Send the message
             producer.send(KAFKA_TOPIC, value=message_data)
-            producer.flush()  # Ensure message is sent immediately
+            # producer.flush()  # Ensure message is sent immediately
             
             iteration += 1
             print(f"Sent message {iteration}: temp={iteration}")
