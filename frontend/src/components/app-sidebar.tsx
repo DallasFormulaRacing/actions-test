@@ -95,6 +95,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [filter, setFilter] = React.useState<'all' | 'active' | 'inactive'>('all');
 
   const [nameFilter, setNameFilter] = React.useState("");
+  const [idFilter, setIdFilter] = React.useState("");
   const [groupFilter, setGroupFilter] = React.useState("");
   const [carFilter, setCarFilter] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState("");
@@ -130,6 +131,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (nameFilter && !sensor.name.toLowerCase().includes(nameFilter.toLowerCase())) {
         return false;
       }
+      if (idFilter && !(sensor.sensor_id === parseInt(idFilter))) {
+        return false;
+      }
 
       return true;
     });
@@ -138,7 +142,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ...sensor,
       url: `/sensors/${sensor.sensor_id}`,
     }));
-  }, [sensors, filter, groupFilter, carFilter, typeFilter, nameFilter]);
+  }, [sensors, filter, groupFilter, carFilter, typeFilter, nameFilter, idFilter]);
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -179,6 +183,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             placeholder="Search name..."
             value={nameFilter}
             onChange={(e) => setNameFilter(e.target.value)}
+            className="h-8 text-sm"
+          />
+          <Input
+            placeholder="Search id..."
+            value={idFilter}
+            onChange={(e) => setIdFilter(e.target.value)}
             className="h-8 text-sm"
           />
           <Input
