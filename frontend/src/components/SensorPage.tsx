@@ -1,6 +1,6 @@
-import { SectionCards } from "./section-cards"
+// import { SectionCards } from "./section-cards"
 import { ChartAreaInteractive } from "./chart-area-interactive"
-import { DataTable } from "./data-table"
+// import { DataTable } from "./data-table"
 import LiveLogStream from "./LiveLogStream"
 
 import { useParams } from "react-router-dom"
