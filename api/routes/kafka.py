@@ -7,7 +7,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from api.services.consumer import KafkaConsumerService
+from api.services.kafkaConsumer import KafkaConsumerService
 
 kafka_bp = Blueprint('kafka', __name__)
 
