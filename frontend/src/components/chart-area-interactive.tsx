@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -49,7 +49,7 @@ const sensorsConfig = {
   }
 } satisfies ChartConfig
 
-const MAX_POINTS = 200;
+const MAX_POINTS = 150;
 
 export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
   const isMobile = useIsMobile()
@@ -161,6 +161,10 @@ export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
             <XAxis
               dataKey="date"
               hide
+            />
+            <YAxis
+              domain={['auto', 'auto']}
+              axisLine={false}
             />
             <ChartTooltip
               cursor={false}
