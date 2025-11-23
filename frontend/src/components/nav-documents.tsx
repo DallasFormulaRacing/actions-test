@@ -33,6 +33,7 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
   const { isMobile } = useSidebar()
   const location = useLocation()
   console.error(items[0])
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Sensors</SidebarGroupLabel>
@@ -60,9 +61,9 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
                       <Badge className="rounded-full px-2 py-0.5 bg-orange-500/5 text-orange-600 border-orange-400/20">
                         {item.group}
                       </Badge>
-                      <Badge className="rounded-full px-2 py-0.5 bg-amber-500/5 text-amber-600 border-amber-400/20">
+                      {/* <Badge className="rounded-full px-2 py-0.5 bg-amber-500/5 text-amber-600 border-amber-400/20">
                         {item.car}
-                      </Badge>
+                      </Badge> */}
                       <Badge className="rounded-full px-2 py-0.5 bg-red-500/5 text-red-500 border-red-400/20">
                         {item.type}
                       </Badge>

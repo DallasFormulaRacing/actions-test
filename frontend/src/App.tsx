@@ -8,8 +8,11 @@ import {
 import { Routes, Route } from "react-router-dom"
 
 import SensorPage from "@/components/SensorPage"
+import { useState } from "react"
 
 export default function Page() {
+  const [carFilter, setCarFilter] = useState("IC-24");
+
   return (
     <div className="dark min-h-screen flex">
       <SidebarProvider
@@ -21,9 +24,9 @@ export default function Page() {
         } as React.CSSProperties
       }
       >
-        <AppSidebar variant="inset" collapsible="icon"/>
+        <AppSidebar variant="inset" collapsible="icon" carFilter={carFilter}/>
         <SidebarInset>
-          <SiteHeader />
+          <SiteHeader carFilter={carFilter} setCarFilter={setCarFilter} />
           <Routes>
             <Route path="/sensors/:sensorId" element={<SensorPage />} />
           </Routes>

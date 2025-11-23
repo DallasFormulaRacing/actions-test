@@ -33,53 +33,6 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Input } from "@/components/ui/input"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    // {
-    //   title: "Dashboard",
-    //   url: "#",
-    //   icon: IconDashboard,
-    // },
-  ],
-  navClouds: [
-    // {
-    //   title: "Capture",
-    //   icon: IconCamera,
-    //   isActive: true,
-    //   url: "#",
-    //   items: [
-    //     {
-    //       title: "Active Proposals",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Archived",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-  ],
-  navSecondary: [
-    // {
-    //   title: "Settings",
-    //   url: "#",
-    //   icon: IconSettings,
-    // },
-  ],
-  documents: [
-    // {
-    //   name: "Data Library",
-    //   url: "#",
-    //   icon: IconDatabase,
-    // },
-  ],
-}
-
 export type SensorItem = {
   sensor_id: number;
   name: string;
@@ -90,14 +43,13 @@ export type SensorItem = {
   active: boolean;
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ carFilter, ...props }: React.ComponentProps<typeof Sidebar> & { carFilter: string }) {
   const [sensors, setSensors] = React.useState<SensorItem[]>([]);
   const [filter, setFilter] = React.useState<'all' | 'active' | 'inactive'>('all');
 
   const [nameFilter, setNameFilter] = React.useState("");
   const [idFilter, setIdFilter] = React.useState("");
   const [groupFilter, setGroupFilter] = React.useState("");
-  const [carFilter, setCarFilter] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState("");
 
   React.useEffect(() => {
@@ -154,8 +106,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className={`data-[slot=sidebar-menu-button]:p-1.5!`}
             >
               <a href="#">
-                <IconInnerShadowTop className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <img
+                  src="/dfr-logo-tyre.png"
+                  alt="DFR Logo"
+                  className="h-full w-auto object-contain"
+                />
+                <span className="text-base font-semibold">DFR Sensor Dashboard</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -198,12 +154,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             className="h-8 text-sm"
           />
           <Input
-            placeholder="Search car..."
-            value={carFilter}
-            onChange={(e) => setCarFilter(e.target.value)}
-            className="h-8 text-sm"
-          />
-          <Input
             placeholder="Search type..."
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
@@ -214,10 +164,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {/* <NavMain items={data.navMain} /> */}
         <NavDocuments items={sensorList} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* <NavUser user={data.user} /> */}
       </SidebarFooter>
     </Sidebar>
   )

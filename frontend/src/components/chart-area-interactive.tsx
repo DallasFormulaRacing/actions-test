@@ -49,6 +49,8 @@ const sensorsConfig = {
   }
 } satisfies ChartConfig
 
+const MAX_POINTS = 200;
+
 export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
@@ -64,7 +66,7 @@ export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
     if (!latestEvents.length) return [];
 
     // flatten all events for this specific sensor
-    return latestEvents.flatMap((event: any) => {
+    const all_points = latestEvents.flatMap((event: any) => {
       if (!event || !event.event || !Array.isArray(event.event.data)) return [];
 
       return event.event.data
@@ -75,6 +77,8 @@ export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
           time: d.time,
         }));
     });
+
+    return all_points.slice(-MAX_POINTS);
   }, [latestEvents, sensorId]);
 
   const filteredMetrics = metrics.map(m => {
