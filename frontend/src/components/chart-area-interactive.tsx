@@ -165,6 +165,7 @@ export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
             <YAxis
               domain={['auto', 'auto']}
               axisLine={false}
+              hide={isMobile}
             />
             <ChartTooltip
               cursor={false}

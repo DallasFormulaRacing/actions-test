@@ -2,6 +2,17 @@ import { useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSSE } from '@/hooks/useSSE';
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 interface LogEntry {
   id: string;
   time: string;
@@ -37,7 +48,7 @@ export default function LiveLogStream({sensorID}: {sensorID: number}) {
       });
 
     // Keep only the last MAX_LOGS entries
-    return sensorLogs.slice(-MAX_LOGS);
+    return sensorLogs.slice(-MAX_LOGS).reverse();
   }, [latestEvents, sensorID]);
 
   // useEffect(() => {
@@ -47,50 +58,71 @@ export default function LiveLogStream({sensorID}: {sensorID: number}) {
   // }, [logs]);
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="@container/main flex flex-1 flex-col gap-2">
-        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <div className="px-4 lg:px-6">
-            <Card className="w-full">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>Logs</span>
-                  <span className={`text-sm ${isConnected ? 'text-green-500' : 'text-red-500'}`}>
-                    {isConnected ? '● Connected' : '● Disconnected'}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-black rounded-lg p-4 h-96 overflow-y-auto font-mono text-sm">
-                  {logs.length === 0 ? (
-                    <div className="text-gray-500">Waiting for events...</div>
-                  ) : (
-                    logs.map((log, index) => (
-                      <div key={log.id} className="mb-4 text-gray-100">
-                        <div>time: {new Date(log.time).toLocaleString('en-US', { 
-                          timeZone: 'America/Chicago',
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          second: '2-digit',
-                          hour12: true
-                        })}</div>
-                        {/* <div>sensor_id: {log.sensor_id}</div> */}
-                        <div>event_type: {log.event_type}</div>
-                        <div>data: {log.data}</div>
-                        {index < logs.length - 1 && <div className="my-2 border-t border-gray-700"></div>}
-                      </div>
-                    ))
-                  )}
-                  <div ref={logsEndRef} />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
+    <div className="px-4 lg:px-6">
+      <Card className="border border-white/10 backdrop-blur-sm @container/card">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center justify-between">
+            Logs
+            <span className={`text-sm ${isConnected ? 'text-green-400' : 'text-red-400'}`}>
+              {isConnected ? '● Connected' : '● Disconnected'}
+            </span>
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <Table className="text-white">
+            <TableHeader>
+              <TableRow className="hover:bg-transparent border-white/10">
+                <TableHead className="text-white/70">Time</TableHead>
+                <TableHead className="text-white/70">Data</TableHead>
+                <TableHead className="text-white/70">Event Type</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {logs.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-gray-500 py-6 text-center">
+                    Waiting for events...
+                  </TableCell>
+                </TableRow>
+              ) : (
+                logs.map((log, idx) => (
+                  <TableRow
+                    key={log.id}
+                    className={`
+                      border-white/5 
+                      ${idx % 2 === 0 ? "bg-white/5" : "bg-white/0"}
+                      hover:bg-white/10
+                    `}
+                  >
+                    <TableCell>
+                      {new Date(log.time).toLocaleString("en-US", {
+                        timeZone: "America/Chicago",
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: true,
+                      })}
+                    </TableCell>
+
+                    <TableCell className="font-mono text-blue-300">
+                      {log.data}
+                    </TableCell>
+
+                    <TableCell className="capitalize">
+                      {log.event_type}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
-  );
+  )
 }
