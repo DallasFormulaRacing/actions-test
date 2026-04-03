@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-app-svc
+  name: flask-react-svc
   annotations:
     tailscale.com/expose: "true"
 spec:
@@ -9,4 +9,4 @@ spec:
   - port: 80
     targetPort: 5000
   selector:
-    app: flask-app
+    app: flask-react-app
