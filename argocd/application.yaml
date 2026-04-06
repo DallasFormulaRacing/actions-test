@@ -1,0 +1,41 @@
+# ────────────────────────────────────────────────────────────────────────────
+# argocd/application.yaml
+#
+# ArgoCD Application — links your GitHub repo to the cluster.
+# Apply once after ArgoCD is installed:
+#   kubectl apply -f argocd/application.yaml -n argocd
+#
+# ArgoCD will then watch the repo and auto-sync whenever deployment.yaml changes
+# (which happens automatically via the CD GitHub Actions workflow).
+# ────────────────────────────────────────────────────────────────────────────
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: car-sensor-api
+  namespace: argocd
+  # Auto-delete managed resources if this Application is deleted
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  # ── Where to pull manifests from ─────────────────────────────────────────
+  source:
+    repoURL: https://github.com/<YOUR_ORG_OR_USER>/<YOUR_REPO>.git  # ← update this
+    targetRevision: main
+    # ArgoCD only watches this folder — cleaner than watching the whole repo
+    path: deployments
+
+  # ── Where to deploy ───────────────────────────────────────────────────────
+  destination:
+    server: https://kubernetes.default.svc   # in-cluster
+    namespace: default                        # change if you use a dedicated namespace
+
+  # ── Sync policy ───────────────────────────────────────────────────────────
+  syncPolicy:
+    automated:
+      # Automatically sync when the git manifest changes
+      selfHeal: true    # re-sync if someone manually changes the cluster state
+      prune: true       # delete resources removed from git
+    syncOptions:
+      - CreateNamespace=true   # create the namespace if it doesn't exist

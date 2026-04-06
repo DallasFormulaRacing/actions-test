@@ -1,20 +1,78 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-react-app
+  name: car-sensor-api
+  labels:
+    app: car-sensor-api
 spec:
-  replicas: 5
-  revisionHistoryLimit: 3
+  replicas: 3
+  revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app: flask-react-app
+      app: car-sensor-api
   template:
     metadata:
       labels:
-        app: flask-react-app
+        app: car-sensor-api
     spec:
       containers:
-      - name: flask-react-app
-        image: dallasformularacing/actions-test_flask-react:PLACEHOLDER
-        ports:
-        - containerPort: 5000
+        - name: car-sensor-api
+          # This tag is auto-updated by the CD workflow on every push to main
+          image: aymanhaq/car-sensor-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+              name: http
+
+          # ── Environment variables (pulled from K8s Secrets) ──────────────────
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: car-sensor-secrets
+                  key: DATABASE_URL
+            - name: EVENTHUB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: car-sensor-secrets
+                  key: EVENTHUB_CONNECTION_STRING
+            - name: EVENTHUB_CONSUMER_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: car-sensor-secrets
+                  key: EVENTHUB_CONSUMER_STRING
+            - name: EVENTHUB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: car-sensor-secrets
+                  key: EVENTHUB_NAME
+            - name: FLASK_ENV
+              value: "production"
+
+          # ── Resource limits (prevents one pod from eating the whole node) ────
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          # ── Health checks ────────────────────────────────────────────────────
+          # Liveness: if this fails, k8s restarts the pod
+          livenessProbe:
+            httpGet:
+              path: /sensors
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            failureThreshold: 3
+
+          # Readiness: pod won't receive traffic until this passes
+          readinessProbe:
+            httpGet:
+              path: /sensors
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3

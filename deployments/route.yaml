@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: car-sensor-api-ingress
+  namespace: default
+spec:
+  rules:
+    - host: "car-sensor.dallasformularacing.com"    # CHANGE WHEN DOMAIN CHANGES
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: car-sensor-api-svc
+                port:
+                  number: 80
