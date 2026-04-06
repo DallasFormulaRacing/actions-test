@@ -2,7 +2,7 @@ name: CI — Build & Push Docker Image
 
 on:
   push:
-    branches: ["main", "actions-test"]
+    branches: ["main", "actions-test", "ST/flask-react-cicd"]
   pull_request:
     branches: ["main"]
 
