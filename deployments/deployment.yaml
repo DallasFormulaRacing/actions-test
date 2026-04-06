@@ -48,6 +48,11 @@ spec:
                   key: EVENTHUB_NAME
             - name: FLASK_ENV
               value: "production"
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: car-sensor-secrets
+                  key: SENTRY_DSN
 
           # ── Resource limits (prevents one pod from eating the whole node) ────
           resources:
