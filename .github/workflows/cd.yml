@@ -39,7 +39,7 @@ jobs:
       - name: Patch image tag in deployment.yaml
         run: |
           SHORT_SHA="${{ steps.get_sha.outputs.short_sha }}"
-          IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/car-sensor-api"
+          IMAGE="${{ vars.DOCKERHUB_USERNAME }}/car-sensor-api"
 
           sed -i "s|image: ${IMAGE}:.*|image: ${IMAGE}:${SHORT_SHA}|" deployments/deployment.yaml
 
