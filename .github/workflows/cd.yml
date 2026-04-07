@@ -12,7 +12,7 @@ jobs:
     name: Update deployment.yaml with new image tag
     runs-on: ubuntu-latest
     # Only run if CI actually passed
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
 
     permissions:
       contents: write  # needed to push the updated deployment.yaml
@@ -26,13 +26,12 @@ jobs:
           fetch-depth: 0
 
       # Reconstruct the SHA from the triggering workflow run
-      - name: Get image SHA tag from triggering workflow
+      - name: Get image SHA tag
         id: get_sha
         run: |
-          SHA="${{ github.event.workflow_run.head_sha }}"
-          SHORT_SHA="${SHA::7}"
+          SHORT_SHA="${GITHUB_SHA::7}"
           echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
-          echo "🔖 New image tag: ${SHORT_SHA}"
+          echo "New image tag: ${SHORT_SHA}"
 
       # Patch deployment.yaml: replace whatever SHA was there with the new one.
       # ArgoCD watches this file — any git change here triggers an automatic sync.
