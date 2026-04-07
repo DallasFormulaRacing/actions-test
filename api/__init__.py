@@ -26,4 +26,4 @@ def create_app():
 
 app = create_app()
 
-# Small comment to see if workflow runs after adding new branch
+# As of now, CD only triggers from this branch with changes in api/ or Dockerfile
