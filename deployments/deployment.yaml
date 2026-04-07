@@ -5,7 +5,10 @@ metadata:
   labels:
     app: car-sensor-api
 spec:
-  replicas: 3
+
+  #EDIT THIS TO 0 IF YOU WANT TO STOP APPLICATION
+  #OTHERWISE, SET IT TO 1-5 TO RUN APPLICATION
+  replicas: 0
   revisionHistoryLimit: 5
   selector:
     matchLabels:
