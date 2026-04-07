@@ -25,3 +25,5 @@ def create_app():
     return app
 
 app = create_app()
+
+# Small comment to see if workflow runs after adding new branch
