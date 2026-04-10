@@ -8,7 +8,7 @@ spec:
 
   #EDIT THIS TO 0 IF YOU WANT TO STOP APPLICATION
   #OTHERWISE, SET IT TO 1-5 TO RUN APPLICATION
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 5
   selector:
     matchLabels:
