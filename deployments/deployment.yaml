@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: dallasformularacing/actions-test_flask-app:0164aca767c881fdbd6405fa4ebeb280947b0ddc
+        image: dallasformularacing/actions-test_flask-app:10599a3654610a5b9d6f997cbb83c5391b43ac0f
         ports:
         - containerPort: 5000
