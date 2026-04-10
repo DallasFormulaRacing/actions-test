@@ -13,7 +13,9 @@ export default function SensorPage() {
   } = useQuery({
     queryKey: ['sensorMetrics', sensorId],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/sensors/${sensorId}/metrics`)
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/sensors/${sensorId}/metrics`)
+
       if (!res.ok) {
         throw new Error('Network err')
       }

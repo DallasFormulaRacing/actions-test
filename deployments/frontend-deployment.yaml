@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-sensor-frontend
+  labels:
+    app: car-sensor-frontend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: car-sensor-frontend
+  template:
+    metadata:
+      labels:
+        app: car-sensor-frontend
+    spec:
+      containers:
+        - name: car-sensor-frontend
+          image: dallasformularacing/car-sensor-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: VITE_API_URL
+              value: "http://car-sensor-api-svc"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-sensor-frontend-svc
+  annotations:
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: "car-sensor-frontend"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: car-sensor-frontend

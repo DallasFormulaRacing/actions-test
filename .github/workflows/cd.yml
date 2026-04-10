@@ -6,6 +6,8 @@ on:
     paths:
       - 'api/**'
       - 'Dockerfile'
+      - 'frontend/**'
+      - 'Dockerfile.frontend'
 
 jobs:
   update-manifest:
@@ -44,6 +46,17 @@ jobs:
 
           echo "📄 Updated deployment.yaml:"
           grep "image:" deployments/deployment.yaml
+      
+      # Front end mimicry of the above code
+      - name: Patch image tag in frontend-deployment.yaml
+        run: |
+          SHORT_SHA="${{ steps.get_sha.outputs.short_sha }}"
+          IMAGE="${{ vars.DOCKERHUB_USERNAME }}/car-sensor-frontend"
+
+          sed -i "s|image: ${IMAGE}:.*|image: ${IMAGE}:${SHORT_SHA}|" deployments/frontend-deployment.yaml
+
+          echo "📄 Updated frontend-deployment.yaml:"
+          grep "image:" deployments/frontend-deployment.yaml
 
       - name: Commit and push updated manifest
         run: |
