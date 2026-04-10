@@ -1,4 +1,4 @@
-# Stage 1: Build
+# Stage 1: Build (VITE_API_URL baked in at build time)
 FROM node:20-slim AS build
 WORKDIR /app
 
