@@ -14,7 +14,7 @@ def get_sensors():
     finally:
         session.close()
 
-@sensors.route("/sensors/<int:sensor_id>/metrics", methods=["GET"])
+@sensors.route("/sensors/<string:sensor_id>/metrics", methods=["GET"])
 def get_sensor_metrics(sensor_id):
     session = Session()
     try:
