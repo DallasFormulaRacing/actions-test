@@ -18,7 +18,7 @@ def get_sensors():
 def get_sensor_metrics(sensor_id):
     session = Session()
     try:
-        rows = session.query(metrics_table).filter_by(sensor_id=sensor_id).limit(50).all()
+        rows = session.query(metrics_table).filter_by(sensor_name=sensor_id).limit(50).all()
         if not rows:
             return jsonify({"error": "Sensor not found"}), 404
         results = [dict(row._mapping) for row in rows]
