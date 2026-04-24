@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: car-sensor-frontend
-          image: dallasformularacing/car-sensor-frontend:e6645d9
+          image: dallasformularacing/car-sensor-frontend:83e861d
           imagePullPolicy: Always
           ports:
             - containerPort: 80
