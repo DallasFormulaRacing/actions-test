@@ -30,13 +30,13 @@ export default function SensorPage() {
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           {/* <SectionCards /> */}
           <div className="px-4 lg:px-6">
-            <ChartAreaInteractive sensorId={Number(sensorId)}/>
+            <ChartAreaInteractive sensorId={sensorId?sensorId:""}/>
           </div>
           {/* <DataTable data={data} /> */}
         </div>
       </div>
     </div>
-    {sensorId && <LiveLogStream sensorID={parseInt(sensorId)} />}
+    {sensorId && <LiveLogStream sensorID={sensorId} />}
     </>
     )
 }

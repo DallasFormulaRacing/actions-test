@@ -10,6 +10,5 @@ metadata = MetaData()
 sensors = Table('sensors', metadata, autoload_with=engine)
 metrics = Table('metrics', metadata, autoload_with=engine)
 
-# Create session
+# Session factory — create a new session per request, don't use a shared instance
 Session = sessionmaker(bind=engine)
-session = Session()

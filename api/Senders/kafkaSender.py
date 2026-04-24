@@ -35,7 +35,7 @@ def run():
                     "data": [
                         {
                             "time": current_time,
-                            "sensor_id": 51,
+                            "sensor_id": "GnssImu-AccelerationX",
                             "data": random_temp,
                         }
                     ],

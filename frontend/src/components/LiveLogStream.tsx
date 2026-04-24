@@ -16,14 +16,14 @@ import {
 interface LogEntry {
   id: string;
   time: string;
-  sensor_id: number;
+  sensor_id: string;
   event_type: string;
   data: number;
 }
 
 const MAX_LOGS = 100; // Limit log history to prevent performance degradation
 
-export default function LiveLogStream({sensorID}: {sensorID: number}) {
+export default function LiveLogStream({sensorID}: {sensorID: string}) {
   const logsEndRef = useRef<HTMLDivElement>(null);
 
   const { isConnected, latestEvents } = useSSE();
@@ -37,8 +37,8 @@ export default function LiveLogStream({sensorID}: {sensorID: number}) {
         if (!event || !event.event || !Array.isArray(event.event.data)) return [];
         
         return event.event.data
-          .filter((d: { sensor_id: number; time: string; data: number }) => d.sensor_id === sensorID)
-          .map((d: { sensor_id: number; time: string; data: number }) => ({
+          .filter((d: { sensor_id: string; time: string; data: number }) => d.sensor_id === sensorID)
+          .map((d: { sensor_id: string; time: string; data: number }) => ({
             id: `${d.time}-${d.sensor_id}-${Math.random()}`,
             time: d.time,
             sensor_id: d.sensor_id,

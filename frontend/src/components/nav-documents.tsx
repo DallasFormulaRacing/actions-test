@@ -42,7 +42,7 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
           {items.map((item) => {
             const active = location.pathname === item.url
             return (
-              <SidebarMenuItem key={item.sensor_id}>
+              <SidebarMenuItem key={item.name}>
                 <SidebarMenuButton
                   asChild
                   isActive={active}
@@ -50,23 +50,14 @@ export function NavDocuments({ items }: { items: SensorItem[] }) {
                 >
                   <Link to={item.url}>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      <Badge
+                      {/* <Badge
                         variant={item.active ? "active" : "inactive"}
                       >
                         ID: {item.sensor_id}
-                      </Badge>
+                      </Badge> */}
                       <span className="font-medium text-sm">{item.name}</span>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      <Badge className="rounded-full px-2 py-0.5 bg-orange-500/5 text-orange-600 border-orange-400/20">
-                        {item.group}
-                      </Badge>
-                      {/* <Badge className="rounded-full px-2 py-0.5 bg-amber-500/5 text-amber-600 border-amber-400/20">
-                        {item.car}
-                      </Badge> */}
-                      <Badge className="rounded-full px-2 py-0.5 bg-red-500/5 text-red-500 border-red-400/20">
-                        {item.type}
-                      </Badge>
                     </div>
 
                   </Link>
