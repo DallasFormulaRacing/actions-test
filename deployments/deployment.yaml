@@ -21,7 +21,7 @@ spec:
       containers:
         - name: car-sensor-api
           # This tag is auto-updated by the CD workflow on every push to main
-          image: dallasformularacing/car-sensor-api:665108f
+          image: dallasformularacing/car-sensor-api:e3056c2
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
