@@ -34,7 +34,6 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Input } from "@/components/ui/input"
 
 export type SensorItem = {
-  sensor_id: number;
   name: string;
   group: string;
   car: string;
@@ -55,9 +54,7 @@ export function AppSidebar({ carFilter, ...props }: React.ComponentProps<typeof 
   React.useEffect(() => {
     async function fetchSensors() {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-        const res = await fetch(`${API_URL}/sensors`);
-
+        const res = await fetch('http://localhost:5000/sensors');
         const data = await res.json();
         setSensors(data);
       } catch (error) {
@@ -85,16 +82,16 @@ export function AppSidebar({ carFilter, ...props }: React.ComponentProps<typeof 
       if (nameFilter && !sensor.name.toLowerCase().includes(nameFilter.toLowerCase())) {
         return false;
       }
-      if (idFilter && !(sensor.sensor_id === parseInt(idFilter))) {
-        return false;
-      }
+      // if (idFilter && !(sensor.sensor_name === parseInt(idFilter))) {
+      //   return false;
+      // }
 
       return true;
     });
     
     return filtered.map((sensor) => ({
       ...sensor,
-      url: `/sensors/${sensor.sensor_id}`,
+      url: `/sensors/${sensor.name}`,
     }));
   }, [sensors, filter, groupFilter, carFilter, typeFilter, nameFilter, idFilter]);
 

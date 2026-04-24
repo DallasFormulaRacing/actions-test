@@ -13,9 +13,7 @@ export default function SensorPage() {
   } = useQuery({
     queryKey: ['sensorMetrics', sensorId],
     queryFn: async () => {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const res = await fetch(`${API_URL}/sensors/${sensorId}/metrics`)
-
+      const res = await fetch(`http://localhost:5000/sensors/${sensorId}/metrics`)
       if (!res.ok) {
         throw new Error('Network err')
       }
@@ -32,13 +30,13 @@ export default function SensorPage() {
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           {/* <SectionCards /> */}
           <div className="px-4 lg:px-6">
-            <ChartAreaInteractive sensorId={Number(sensorId)}/>
+            <ChartAreaInteractive sensorId={sensorId?sensorId:""}/>
           </div>
           {/* <DataTable data={data} /> */}
         </div>
       </div>
     </div>
-    {sensorId && <LiveLogStream sensorID={parseInt(sensorId)} />}
+    {sensorId && <LiveLogStream sensorID={sensorId} />}
     </>
     )
 }

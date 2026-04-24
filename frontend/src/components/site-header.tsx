@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-const cars = ["IC-24", "AC", "Other"]
+const cars = ["ic26", "AC", "Other"]
 
 export function SiteHeader({ carFilter, setCarFilter }: {carFilter: string; setCarFilter: (value: string) => void}) {
   return (

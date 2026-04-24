@@ -34,7 +34,7 @@ import { useSSE } from "@/hooks/useSSE"
 export const description = "An interactive area chart"
 
 type Metrics = {
-  sensor_id: number;
+  sensor_id: string;
   data: number;
   time: string;
 }
@@ -51,7 +51,7 @@ const sensorsConfig = {
 
 const MAX_POINTS = 150;
 
-export function ChartAreaInteractive({ sensorId }: { sensorId: number }) {
+export function ChartAreaInteractive({ sensorId }: { sensorId: string }) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
   const { latestEvents } = useSSE()
