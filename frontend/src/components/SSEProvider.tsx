@@ -17,7 +17,8 @@ export function SSEProvider({ children }: { children: React.ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const es = new EventSource(`http://localhost:5000/${environment}/stream`);
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const es = new EventSource(`${API_URL}/${environment}/stream`);
 
     es.onopen = () => {
       console.log("SSE connected");
